@@ -1,1 +1,4 @@
-This is a practice for txt file creation, SSH set up, and git add, commit, push. 
+Phase 1: This is a practice for txt file creation, SSH set up, and git 
+add, commit, push. 
+Phase 2: Practice editing txt file, pushing into github, then pull from 
+github into Rivanna. 
