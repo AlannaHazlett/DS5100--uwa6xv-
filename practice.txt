@@ -1,0 +1,1 @@
+This is a practice for txt file creation, SSH set up, and git add, commit, push. 
