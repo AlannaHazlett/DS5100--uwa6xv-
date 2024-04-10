@@ -1,0 +1,124 @@
+---
+title: "M11InClass"
+author: "Alanna Hazlett"
+date: "2024-04-09"
+output: html_document
+---
+
+```{r}
+#install.packages('tidyverse')
+library(tidyverse)
+scores <- 
+  tibble(
+    name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
+    school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
+    teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
+    sex = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
+    math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+    reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
+)
+```
+View the the tibble
+```{r}
+scores
+#print(scores)
+```
+\
+Know the difference between doing something and assigning it to a variable or not assigning it to a variable.\
+Get the first three rows of the tibble.\
+Then assign the first three rows of the tibble to a variable.\
+
+```{r}
+scores %>% 
+  slice(1:3)
+scores_small<- scores %>% 
+  slice(1:3)
+```
+\
+Sort the data by math_score from high to low
+```{r}
+scores %>% 
+  arrange(desc(math_score))
+```
+\
+Sort the data by name in alphabetical order.
+```{r}
+scores %>% 
+  arrange(name)
+```
+\
+Sort the data by sex so females show up first.
+```{r}
+scores %>% 
+  arrange(sex)
+```
+\
+Sort the data by school,teacher,sex.math_score,and reading_score.
+```{r}
+scores %>% 
+  arrange(school, teacher, sex, math_score, reading_score)
+```
+\
+Select only name,math_score, and reading_score.
+```{r}
+scores %>% 
+  select(name, math_score,reading_score)
+```
+\
+Select all columns except the sex column.
+```{r}
+scores %>% 
+  select(-sex)
+```
+\
+Select all columns except math_score and reading_score.
+```{r}
+scores %>% 
+  select(-math_score,-reading_score)
+```
+\
+Keep all columns, but rearrange them so sex is the first column.
+```{r}
+scores %>% 
+  select(sex,everything())
+```
+\
+Filter by students who are male and went to south.
+```{r}
+scores %>% 
+  filter(sex == "male" & school == "south")
+  #filter(sex == "male", school == "south")
+```
+\
+Filter by students who did above average in math.
+```{r}
+scores %>% 
+  filter(math_score > mean(math_score))
+```
+\
+Filter to teachers whose best math student got a score of 5.
+```{r}
+scores %>% 
+  group_by(teacher) %>% 
+  filter(max(math_score)==5)
+```
+\
+Set math and reading scores 10 times their original values. 
+```{r}
+#This adds columns
+scores %>% 
+  mutate(math_score * 10) %>% 
+  mutate(reading_score * 10)
+#This replaces the original columns
+scores %>% 
+  mutate(math_score = math_score * 10, reading_score = reading_score * 10)
+```
+\
+Create math_score_centered_by_sex column that subtracts a student's math_score from the mean math_score by sex. Displaying results for the new column in descending order.
+```{r}
+scores %>% 
+  group_by(sex) %>% 
+  mutate(math_score_centered_by_sex = math_score - mean(math_score)) %>% 
+  arrange(desc(math_score_centered_by_sex))
+```
+
