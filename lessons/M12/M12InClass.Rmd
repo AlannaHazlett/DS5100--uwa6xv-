@@ -1,0 +1,93 @@
+---
+title: "M12InClass"
+author: "Alanna Hazlett"
+date: "2024-04-16"
+output: html_document
+---
+
+```{r}
+install.packages(vctrs)
+library(vctrs)
+library(tidyverse)
+```
+
+```{r}
+head(mtcars)
+```
+
+This is our blank canvas. It expects it to be square.
+```{r}
+mpg %>% 
+  ggplot()
+```
+Make scatterplot of hwy vs cyl in mpg dataset.
+```{r}
+mpg %>% 
+  ggplot(aes(x=cyl,y=hwy))+
+      geom_point()
+```
+Scatterplots of categorical vs categorical variables are not helpful.
+```{r}
+mpg %>% 
+  ggplot(aes(x=class,y=drv))+
+      geom_point()
+```
+Plot math function sin(x)/x.
+```{r}
+x<- seq(-6*pi,6*pi,length.out=100)
+y<-sin(x)/x
+df<-data.frame(x,y)
+ggplot(aes(x=x,y=y),data=df)+
+  geom_line()
+```
+Plot speed vs dist for cars dataset.
+```{r}
+ggplot(aes(x=dist,y=speed),data=cars)+
+  geom_point()
+```
+Create the same plot, but utilize color to distinguish point of dist greater than 80.
+```{r}
+ggplot(aes(x=dist,y=speed),data=cars)+
+  geom_point(mapping=aes(color=dist>80))
+```
+Flip the colors.
+```{r}
+ggplot(aes(x=dist,y=speed),data=cars)+
+  geom_point(mapping=aes(color=dist>80))+
+  scale_color_manual(values=c("blue","red"))
+#Another way
+#ggplot(aes(x=dist,y=speed),data=cars)+
+#geom_point(color=ifelse(cars$dist > 80, "red", "blue"))
+```
+Add geom_smooth
+```{r}
+ggplot(aes(x=dist,y=speed),data=cars)+
+  geom_point(mapping=aes(color=dist>80))+
+  geom_smooth(method=lm)+
+  scale_color_manual(values=c("blue","red"))
+
+```
+Histogram of speed for cars dataset.
+```{r}
+cars %>% 
+  ggplot(aes(x=speed))+
+  geom_histogram()
+```
+Histogram of distance for cars dataset.
+```{r}
+cars %>% 
+  ggplot(aes(x=dist))+
+  geom_histogram(bins=10)
+```
+Faceted plot of a scatterplot of hwy and cty of the mpg with drv as rows and cyl as cols.
+```{r}
+mpg %>% 
+  ggplot()+
+  geom_point(aes(x=hwy,y=cty))+
+  facet_grid(drv~cyl)
+```
+
+
+
+
+
